@@ -68,8 +68,6 @@ window.addEventListener('DOMContentLoaded',function() {
         const popup = document.querySelector('.popup'),
             popupBtns = document.querySelectorAll('.popup-btn'),
             popupClose = document.querySelector('.popup-close');
-
-       
         popupBtns.forEach(item => item.addEventListener('click', () => {
             if(document.documentElement.innerWidth > 768){
                 popup.style.cssText = `
@@ -92,6 +90,8 @@ window.addEventListener('DOMContentLoaded',function() {
         });
     };
     togglePopup();
+
+    window.addEventListener('resize', togglePopup);
 
     //next slide scroll
     document.querySelector('html').style.cssText = `scroll-behavior: smooth`;
