@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded',function() {
         const btnMenu = document.querySelector('.menu'),
             closeBtn = document.querySelector('.close-btn'),
             menu = document.querySelector('menu'),
-            menuItems = menu.querySelectorAll('ul>li');
+            menuItems = menu.querySelectorAll('ul>li>a');
 
         const handlerMenu = () => {
             menu.classList.toggle('active-menu');
@@ -69,8 +69,9 @@ window.addEventListener('DOMContentLoaded',function() {
             popupBtns = document.querySelectorAll('.popup-btn'),
             popupClose = document.querySelector('.popup-close');
 
+       
         popupBtns.forEach(item => item.addEventListener('click', () => {
-            if(document.documentElement.clientWidth > 768){
+            if(document.documentElement.innerWidth > 768){
                 popup.style.cssText = `
                 opacity: 0;
                 transition: all .2s;
@@ -82,10 +83,8 @@ window.addEventListener('DOMContentLoaded',function() {
             }
         }));
         popupClose.addEventListener('click', () =>{
-            if(document.documentElement.clientWidth > 768){
-                popup.style.cssText = `
-                    display: none;
-                    `;
+            if(document.documentElement.innerWidth > 768){
+                popup.style.cssText = `display: none;`;
                 setTimeout(() => {popup.style.opacity = '0'}, 50);
             } else {
                 popup.style.display = 'none';
