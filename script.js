@@ -94,7 +94,8 @@ window.addEventListener('DOMContentLoaded',function() {
     window.addEventListener('resize', togglePopup);
 
     //next slide scroll
-    document.querySelector('html').style.cssText = `scroll-behavior: smooth`;
+    const html = document.querySelector('html');
+    html.style.cssText = `scroll-behavior: smooth`;
 
 
 
