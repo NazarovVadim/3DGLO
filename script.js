@@ -94,6 +94,8 @@ window.addEventListener('DOMContentLoaded',function() {
     };
     togglePopup();
 
+    //next slide scroll
+    document.querySelector('html').style.cssText = `scroll-behavior: smooth`;
 
 
 
