@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded',function() {
             popupBtns = document.querySelectorAll('.popup-btn'),
             popupClose = document.querySelector('.popup-close');
         popupBtns.forEach(item => item.addEventListener('click', () => {
-            if(document.documentElement.innerWidth > 768){
+            if(document.documentElement.clientWidth > 768){
                 popup.style.cssText = `
                 opacity: 0;
                 transition: all .2s;
@@ -81,7 +81,7 @@ window.addEventListener('DOMContentLoaded',function() {
             }
         }));
         popupClose.addEventListener('click', () =>{
-            if(document.documentElement.innerWidth > 768){
+            if(document.documentElement.clientWidth > 768){
                 popup.style.cssText = `display: none;`;
                 setTimeout(() => {popup.style.opacity = '0'}, 50);
             } else {
