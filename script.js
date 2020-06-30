@@ -83,7 +83,7 @@ window.addEventListener('DOMContentLoaded',function() {
         popupClose.addEventListener('click', () =>{
             if(window.innerWidth > 768){
                 popup.style.cssText = `display: none;`;
-                setTimeout(() => {popup.style.opacity = '0'}, 50);
+                setTimeout(() => {popup.style.opacity = '1'}, 50);
             } else {
                 popup.style.display = 'none';
             }
