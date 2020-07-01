@@ -55,13 +55,14 @@ window.addEventListener('DOMContentLoaded',function() {
         const handlerMenu = () => {
             menu.classList.toggle('active-menu');
         };
-
-        menu.addEventListener('click', e => {
-            let target = e.target;
-            if(target.classList.contains('close-btn') || target.tagName === 'A') handlerMenu();
+        document.addEventListener('click', event => {
+            let target = event.target;
+            if (target.closest('.menu') || target.classList.contains('close-btn') || (target.closest('menu') && target.tagName === 'A')) handlerMenu();
+            
+            if ((menu.classList.contains('active-menu') && target !== target.closest('menu')) && !target.closest('.menu')){
+                handlerMenu();
+            }
         });
-
-        btnMenu.addEventListener('click',handlerMenu);
     };
     toggleMenu();
 
