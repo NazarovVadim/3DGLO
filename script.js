@@ -56,9 +56,12 @@ window.addEventListener('DOMContentLoaded',function() {
             menu.classList.toggle('active-menu');
         };
 
+        menu.addEventListener('click', e => {
+            let target = e.target;
+            if(target.classList.contains('close-btn') || target.tagName === 'A') handlerMenu();
+        });
+
         btnMenu.addEventListener('click',handlerMenu);
-        closeBtn.addEventListener('click',handlerMenu);
-        menuItems.forEach(item => item.addEventListener('click', handlerMenu));
     };
     toggleMenu();
 
@@ -80,14 +83,22 @@ window.addEventListener('DOMContentLoaded',function() {
                 popup.style.display = 'block';
             }
         }));
-        popupClose.addEventListener('click', () =>{
-            if(window.innerWidth > 768){
-                popup.style.cssText = `display: none;`;
-                setTimeout(() => {popup.style.opacity = '1'}, 50);
-            } else {
-                popup.style.display = 'none';
+        popup.addEventListener('click', event => {
+            let target = event.target;
+            if (target.classList.contains('popup-close')){
+                if(window.innerWidth > 768){
+                    popup.style.cssText = `display: none;`;
+                    setTimeout(() => {popup.style.opacity = '1'}, 50);
+                } else { 
+                    popup.style.display = 'none';
+                }
+            } else{
+                target = target.closest('.popup-content');
+                if(!target){
+                    popup.style.display = 'none';
+                }
             }
-        });
+        })
     };
     togglePopup();
 
@@ -96,6 +107,39 @@ window.addEventListener('DOMContentLoaded',function() {
     //next slide scroll
     const html = document.querySelector('html');
     html.style.cssText = `scroll-behavior: smooth`;
+
+    //tabs
+
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tabs = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+
+        const toggleTabContent = index => {
+            tabContent.forEach((item, i) => {
+                if (i === index){
+                    tabs[i].classList.add('active');
+                    item.classList.remove('d-none');
+                } else{
+                    tabs[i].classList.remove('active');
+                    item.classList.add('d-none');
+                }
+            });
+        };
+
+            tabHeader.addEventListener('click', event => {
+                let target = event.target;
+                target = target.closest('.service-header-tab');
+                if(target.classList.contains('service-header-tab')){
+                    tabs.forEach((item, i) => {
+                        if(item === target){
+                            toggleTabContent(i);
+                        }
+                    });
+                }
+            });
+    };
+    tabs();
 
 
 
