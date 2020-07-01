@@ -58,10 +58,7 @@ window.addEventListener('DOMContentLoaded',function() {
         document.addEventListener('click', event => {
             let target = event.target;
             if (target.closest('.menu') || target.classList.contains('close-btn') || (target.closest('menu') && target.tagName === 'A')) handlerMenu();
-            
-            if ((menu.classList.contains('active-menu') && target !== target.closest('menu')) && !target.closest('.menu')){
-                handlerMenu();
-            }
+            if ((menu.classList.contains('active-menu') && target !== target.closest('menu')) && !target.closest('.menu') && target.tagName !== 'LI') handlerMenu();
         });
     };
     toggleMenu();
