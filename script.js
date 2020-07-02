@@ -190,7 +190,7 @@ window.addEventListener('DOMContentLoaded',function() {
             else if(target.matches('.dot'))
                 dots.forEach((item, i) => currentSlide = (target === item) ? i : currentSlide);
 
-            currentSlide = (currentSlide >= slides.length) ? 0 : (currentSlide <= 0) ? slides.length - 1 : currentSlide;
+            currentSlide = (currentSlide >= slides.length) ? 0 : (currentSlide < 0) ? slides.length - 1 : currentSlide;
 
             nextSlide(slides, currentSlide, 'portfolio-item-active');
             nextSlide(dots, currentSlide, 'dot-active');
