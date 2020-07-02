@@ -196,8 +196,8 @@ window.addEventListener('DOMContentLoaded',function() {
             nextSlide(dots, currentSlide, 'dot-active');
             }
         });
-        slider.addEventListener('mouseover', event => {if(event.target.matches('.potfolio-btn') || event.target.matches('.dot')) stopSlide();});
-        slider.addEventListener('mouseout', event => {if(event.target.matches('.potfolio-btn') || event.target.matches('.dot')) startSlide();});
+        slider.addEventListener('mouseover', event => {if(event.target.matches('.portfolio-btn') || event.target.matches('.dot')) stopSlide();});
+        slider.addEventListener('mouseout', event => {if(event.target.matches('.portfolio-btn') || event.target.matches('.dot')) startSlide();});
     };
     sliderFoo();
 
