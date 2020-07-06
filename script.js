@@ -40,11 +40,9 @@ window.addEventListener('DOMContentLoaded',function() {
                 clearInterval(interval);
             }
     }
-
     countTimer('30 june 2021');
 
     //menu
-
     const toggleMenu = () => {
 
         const btnMenu = document.querySelector('.menu'),
@@ -64,7 +62,6 @@ window.addEventListener('DOMContentLoaded',function() {
     toggleMenu();
 
     //popup
-
     const togglePopup = () => {
         const popup = document.querySelector('.popup'),
             popupBtns = document.querySelectorAll('.popup-btn'),
@@ -103,11 +100,13 @@ window.addEventListener('DOMContentLoaded',function() {
     window.addEventListener('resize', togglePopup);
 
     //next slide scroll
-    const html = document.querySelector('html');
-    html.style.cssText = `scroll-behavior: smooth`;
+    const smoothScroll = () => {
+        const html = document.querySelector('html');
+        html.style.cssText = `scroll-behavior: smooth`;
+    }
+    smoothScroll();
 
     //tabs
-
     const tabs = () => {
         const tabHeader = document.querySelector('.service-header'),
             tabs = tabHeader.querySelectorAll('.service-header-tab'),
@@ -140,7 +139,6 @@ window.addEventListener('DOMContentLoaded',function() {
     tabs();
 
     //slider
-
     const sliderFoo = () => {
         const slides = document.querySelectorAll('.portfolio-item'),
             buttons = document.querySelectorAll('.portfolio-btn'),
@@ -172,10 +170,10 @@ window.addEventListener('DOMContentLoaded',function() {
             nextSlide(dots, currentSlide, 'dot-active');
         };
 
-        const startSlide = (time = 3000) => interval = setInterval(autoPlay, time);
+        const startSlide = (time = 5000) => interval = setInterval(autoPlay, time);
         const stopSlide = () => clearInterval(interval);
 
-        startSlide(10000);
+        startSlide(5000);
 
         slider.addEventListener('click', event => {
             event.preventDefault();
@@ -201,19 +199,32 @@ window.addEventListener('DOMContentLoaded',function() {
     };
     sliderFoo();
 
+    //изменеие фотографий по наведению в блоке "Наша команда"
+    const changePhotoOnHover = () => {
+        const photos = document.querySelectorAll('.command__photo');
+        
+        const changePhoto = e => {
+            const src = e.target.src;
+            e.target.src = e.target.dataset.img;
+            e.target.dataset.img = src;
+        };
 
+        photos.forEach(item => {
+            item.addEventListener('mouseenter', changePhoto);
+            item.addEventListener('mouseleave', changePhoto);
+        });
+    };
+    changePhotoOnHover();
 
-
-
-
-
-
-
-
-
-
-
-
-
+    //калькулятор
+    const calculator = () => {
+        const calcInputs = document.querySelectorAll('input.calc-item');
+        calcInputs.forEach(item => {
+            item.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[\D]/g, '');
+            });
+        })
+    };
+    calculator();
 
 });
