@@ -237,16 +237,21 @@ window.addEventListener('DOMContentLoaded',function() {
             else if (calcDay.value && calcDay.value < 10)
                dayValue *= 1.5;
             
-            total = (typeValue && squareValue) ? (price * typeValue * squareValue * countValue * dayValue) : 0;
-
-            let j = (total - (+totalValue.textContent)) / 10;
-            if(+totalValue.textContent < total){
-                for(let i = +totalValue.textContent; i <= total; i++){
-                    setTimeout(() => {totalValue.textContent = i}, 10);
+            if(typeValue && squareValue){
+                total = price * typeValue * squareValue * countValue * dayValue;
+                if(+totalValue.textContent < total){
+                    
+                    for(let i = +totalValue.textContent; i <= total; i ++){
+                        setTimeout(() => {totalValue.textContent = i}, 1);
+                    }
+                } else if(+totalValue.textContent > total){
+                    for(let i = +totalValue.textContent; i >= total; i --){
+                        setTimeout(() => {totalValue.textContent = i}, 1);
+                    }
                 }
-            } else if(+totalValue.textContent > total){
-                for(let i = +totalValue.textContent; i >= total; i--){
-                    setTimeout(() => {totalValue.textContent = i}, 10);
+            } else if (!typeValue || !squareValue){
+                for(let i = +totalValue.textContent; i >= 0; i --){
+                    setTimeout(() => {totalValue.textContent = i}, 1);
                 }
             }
         };
