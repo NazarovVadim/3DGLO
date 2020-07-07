@@ -217,14 +217,56 @@ window.addEventListener('DOMContentLoaded',function() {
     changePhotoOnHover();
 
     //калькулятор
-    const calculator = () => {
+    const calculator = (price = 100) => {
         const calcInputs = document.querySelectorAll('input.calc-item');
         calcInputs.forEach(item => {
             item.addEventListener('input', (e) => {
                 e.target.value = e.target.value.replace(/[\D]/g, '');
             });
-        })
+        });
+
+        const countSum = () => {
+            let total = 0,
+                typeValue = calcType.options[calcType.selectedIndex].value,
+                squareValue = +calcSquare.value,
+                countValue = 1,
+                dayValue = 1;
+            if(calcCount.value > 1) countValue += (calcCount.value - 1) / 10;
+            if(calcDay.value && calcDay.value < 5)
+               dayValue *= 2;
+            else if (calcDay.value && calcDay.value < 10)
+               dayValue *= 1.5;
+            
+            total = (typeValue && squareValue) ? (price * typeValue * squareValue * countValue * dayValue) : 0;
+
+            let j = (total - (+totalValue.textContent)) / 10;
+            if(+totalValue.textContent < total){
+                for(let i = +totalValue.textContent; i <= total; i++){
+                    setTimeout(() => {totalValue.textContent = i}, 10);
+                }
+            } else if(+totalValue.textContent > total){
+                for(let i = +totalValue.textContent; i >= total; i--){
+                    setTimeout(() => {totalValue.textContent = i}, 10);
+                }
+            }
+        };
+
+        const calcBlock = document.querySelector('.calc-block'),
+            calcType = document.querySelector('.calc-type'),
+            calcSquare = document.querySelector('.calc-square'),
+            calcCount = document.querySelector('.calc-count'),
+            calcDay = document.querySelector('.calc-day'),
+            totalValue = document.getElementById('total');
+
+        calcBlock.addEventListener('change', event => {
+            const target = event.target;
+
+            if(target === calcType || target === calcSquare || target === calcDay  || target === calcCount){
+                countSum();
+            }
+        });
+
     };
-    calculator();
+    calculator(100);
 
 });
