@@ -239,22 +239,38 @@ window.addEventListener('DOMContentLoaded',function() {
             
             if(typeValue && squareValue){
                 total = price * typeValue * squareValue * countValue * dayValue;
-                if(+totalValue.textContent < total){
-                    
-                    for(let i = +totalValue.textContent; i <= total; i ++){
-                        setTimeout(() => {totalValue.textContent = i}, 1);
-                    }
-                } else if(+totalValue.textContent > total){
-                    for(let i = +totalValue.textContent; i >= total; i --){
-                        setTimeout(() => {totalValue.textContent = i}, 1);
-                    }
+            };
+
+            let count = +totalValue.textContent;
+            let delta = total - count;
+
+            const totalAnimation = () => {
+                if(delta === 0 || count === total) {
+                    cancelAnimationFrame(requestId);
+                    return;
                 }
-            } else if (!typeValue || !squareValue){
-                for(let i = +totalValue.textContent; i >= 0; i --){
-                    setTimeout(() => {totalValue.textContent = i}, 1);
+                const deltaStr = Math.abs(delta) + '',
+                    length = deltaStr.length;
+                let step = 10 ** (length-2);
+            
+                
+                if(Math.abs(+totalValue.textContent - total) <= step) {
+                    totalValue.textContent = total;
+                    cancelAnimationFrame(requestId);
+                    return;
                 }
+                if (delta < 0) {
+                    count -= step;
+                    totalValue.textContent = count;
+                    requestAnimationFrame(totalAnimation);
+                } else if (delta > 0) {
+                    count += step;
+                    totalValue.textContent = count;
+                    requestAnimationFrame(totalAnimation);
+                } 
             }
-        };
+            let requestId = requestAnimationFrame(totalAnimation);
+    }
 
         const calcBlock = document.querySelector('.calc-block'),
             calcType = document.querySelector('.calc-type'),
