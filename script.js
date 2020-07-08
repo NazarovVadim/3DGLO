@@ -252,8 +252,6 @@ window.addEventListener('DOMContentLoaded',function() {
                 const deltaStr = Math.abs(delta) + '',
                     length = deltaStr.length;
                 let step = 10 ** (length-2);
-            
-                
                 if(Math.abs(+totalValue.textContent - total) <= step) {
                     totalValue.textContent = total;
                     cancelAnimationFrame(requestId);
