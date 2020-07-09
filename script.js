@@ -291,7 +291,7 @@ window.addEventListener('DOMContentLoaded',function() {
     //send-ajax=form
     const sendForm = () => {
         const errorMessage = 'Что-то пошло не так...',
-            loadMessage = 'Загрузка...',
+            loadMessage = `<div class="sk-rotating-plane"></div>`,
             successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
         const form1 = document.getElementById('form1'),
             form2 = document.getElementById('form2'),
@@ -318,28 +318,28 @@ window.addEventListener('DOMContentLoaded',function() {
         form1.addEventListener('submit', e => {
             e.preventDefault();
             form1.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            statusMessage.innerHTML = loadMessage;
             const formData = new FormData(form1);
             let body= {};
             formData.forEach((value,key) => body[key] = value);
             postData(
                 body,
-                () => statusMessage.textContent = successMessage,
-                error => {console.error(error); statusMessage.textContent = errorMessage;}
+                () => statusMessage.innerHTML = successMessage,
+                error => {console.error(error); statusMessage.innerHTML = errorMessage;}
             );
             form1.querySelectorAll('input').forEach(item => item.value = '');
         });
         form2.addEventListener('submit', e => {
             e.preventDefault();
             form2.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            statusMessage.innerHTML = loadMessage;
             const formData = new FormData(form2);
             let body= {};
             formData.forEach((value,key) => body[key] = value);
             postData(
                 body,
-                () => statusMessage.textContent = successMessage,
-                error => {console.error(error); statusMessage.textContent = errorMessage;}
+                () => statusMessage.innerHTML = successMessage,
+                error => {console.error(error); statusMessage.innerHTML = errorMessage;}
             );
             form2.querySelectorAll('input').forEach(item => item.value = '');
         });
@@ -347,15 +347,15 @@ window.addEventListener('DOMContentLoaded',function() {
             e.preventDefault();
             form3.appendChild(statusMessage);
             statusMessage.style.color='#fff';
-            statusMessage.textContent = loadMessage;
+            statusMessage.innerHTML = loadMessage;
             
             const formData = new FormData(form3);
             let body= {};
             formData.forEach((value,key) => body[key] = value);
             postData(
                 body,
-                () => statusMessage.textContent = successMessage,
-                error => {console.error(error); statusMessage.textContent = errorMessage;}
+                () => statusMessage.innerHTML = successMessage,
+                error => {console.error(error); statusMessage.innerHTML = errorMessage;}
             );
             form3.querySelectorAll('input').forEach(item => item.value = '');
         });
