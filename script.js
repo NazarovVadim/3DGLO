@@ -290,42 +290,87 @@ window.addEventListener('DOMContentLoaded',function() {
 
     //send-ajax=form
     const sendForm = () => {
-        console.log(1);
-        
         const errorMessage = 'Что-то пошло не так...',
             loadMessage = 'Загрузка...',
             successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
-        const form = document.getElementById('form1');
+        const form1 = document.getElementById('form1'),
+            form2 = document.getElementById('form2'),
+            form3 = document.getElementById('form3');
 
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = `font-size: 2rem;`;
-        form.addEventListener('submit', e => {
-            console.log(1);
-            
+
+        const validePhone = (form) => {
+            if(form.querySelector('.form-phone')){
+                form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^0-9+]/g, ''));
+            }
+            if(form.querySelector('.form-name')){
+                form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
+            }
+            if(form.querySelector('.form-message')){
+                form.querySelector('.form-message').addEventListener('input', e => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
+            }
+        };
+        validePhone(form1);
+        validePhone(form2);
+        validePhone(form3);
+        
+        form1.addEventListener('submit', e => {
             e.preventDefault();
-            form.appendChild(statusMessage);
-
-            const request = new XMLHttpRequest();
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'multipart/form-data');
-
-            const formData = new formData(form);
-            request.send(formData);
-
-            request.addEventListener('readystatechange', () => {
-                statusMessage.textContent = loadMessage;
-
-                if(request.readyState !== 4) return;
-
-                if(request.status === 200){
-                    statusMessage = successMessage
-                }else {
-                    statusMessage = errorMessage;
-                }
-            });
+            form1.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form1);
+            let body= {};
+            formData.forEach((value,key) => body[key] = value);
+            postData(
+                body,
+                () => statusMessage.textContent = successMessage,
+                error => {console.error(error); statusMessage.textContent = errorMessage;}
+            );
+            form1.querySelectorAll('input').forEach(item => item.value = '');
         });
-
+        form2.addEventListener('submit', e => {
+            e.preventDefault();
+            form2.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form2);
+            let body= {};
+            formData.forEach((value,key) => body[key] = value);
+            postData(
+                body,
+                () => statusMessage.textContent = successMessage,
+                error => {console.error(error); statusMessage.textContent = errorMessage;}
+            );
+            form2.querySelectorAll('input').forEach(item => item.value = '');
+        });
+        form3.addEventListener('submit', e => {
+            e.preventDefault();
+            form3.appendChild(statusMessage);
+            statusMessage.style.color='#fff';
+            statusMessage.textContent = loadMessage;
+            
+            const formData = new FormData(form3);
+            let body= {};
+            formData.forEach((value,key) => body[key] = value);
+            postData(
+                body,
+                () => statusMessage.textContent = successMessage,
+                error => {console.error(error); statusMessage.textContent = errorMessage;}
+            );
+            form3.querySelectorAll('input').forEach(item => item.value = '');
+        });
+        //отправка данных на сервер
+        const postData = (body, outputSuccess, outputError) => {
+            const request = new XMLHttpRequest();
+            request.addEventListener('readystatechange', () => {
+                if(request.readyState !== 4) return;
+                if(request.status === 200) outputSuccess();
+                else outputError(request.status);
+            });
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(body));
+        } 
     }
     sendForm();
 
