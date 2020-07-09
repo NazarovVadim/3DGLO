@@ -288,4 +288,45 @@ window.addEventListener('DOMContentLoaded',function() {
     };
     calculator(100);
 
+    //send-ajax=form
+    const sendForm = () => {
+        console.log(1);
+        
+        const errorMessage = 'Что-то пошло не так...',
+            loadMessage = 'Загрузка...',
+            successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+        const form = document.getElementById('form1');
+
+        const statusMessage = document.createElement('div');
+        statusMessage.style.cssText = `font-size: 2rem;`;
+        form.addEventListener('submit', e => {
+            console.log(1);
+            
+            e.preventDefault();
+            form.appendChild(statusMessage);
+
+            const request = new XMLHttpRequest();
+
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'multipart/form-data');
+
+            const formData = new formData(form);
+            request.send(formData);
+
+            request.addEventListener('readystatechange', () => {
+                statusMessage.textContent = loadMessage;
+
+                if(request.readyState !== 4) return;
+
+                if(request.status === 200){
+                    statusMessage = successMessage
+                }else {
+                    statusMessage = errorMessage;
+                }
+            });
+        });
+
+    }
+    sendForm();
+
 });
