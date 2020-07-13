@@ -301,8 +301,8 @@ window.addEventListener('DOMContentLoaded',function() {
         statusMessage.style.cssText = `font-size: 2rem;`;
 
         const validePhone = (form) => {
-            if(form.querySelector('.form-phone')){
-                form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1'));
+            if(form.querySelector('.form-phone')){ 
+                form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/(?<!^)\+|[^\d+]/g, ''));
             }
             if(form.querySelector('.form-name')){
                 form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
