@@ -302,7 +302,7 @@ window.addEventListener('DOMContentLoaded',function() {
 
         const validePhone = (form) => {
             if(form.querySelector('.form-phone')){
-                form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^0-9+]/g, ''));
+                form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^[^+\d]*(\+|\d)|\D/g, '$1'));
             }
             if(form.querySelector('.form-name')){
                 form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
@@ -322,11 +322,10 @@ window.addEventListener('DOMContentLoaded',function() {
             const formData = new FormData(form1);
             let body= {};
             formData.forEach((value,key) => body[key] = value);
-            postData(
-                body,
-                () => statusMessage.innerHTML = successMessage,
-                error => {console.error(error); statusMessage.innerHTML = errorMessage;}
-            );
+            postData(body)
+                .then(() => statusMessage.innerHTML = successMessage)
+                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
+                
             form1.querySelectorAll('input').forEach(item => item.value = '');
         });
         form2.addEventListener('submit', e => {
@@ -336,11 +335,10 @@ window.addEventListener('DOMContentLoaded',function() {
             const formData = new FormData(form2);
             let body= {};
             formData.forEach((value,key) => body[key] = value);
-            postData(
-                body,
-                () => statusMessage.innerHTML = successMessage,
-                error => {console.error(error); statusMessage.innerHTML = errorMessage;}
-            );
+            postData(body)
+                .then(() => statusMessage.innerHTML = successMessage)
+                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
+
             form2.querySelectorAll('input').forEach(item => item.value = '');
         });
         form3.addEventListener('submit', e => {
@@ -352,26 +350,29 @@ window.addEventListener('DOMContentLoaded',function() {
             const formData = new FormData(form3);
             let body= {};
             formData.forEach((value,key) => body[key] = value);
-            postData(
-                body,
-                () => statusMessage.innerHTML = successMessage,
-                error => {console.error(error); statusMessage.innerHTML = errorMessage;}
-            );
+            postData(body)
+                .then(() => statusMessage.innerHTML = successMessage)
+                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
+
             form3.querySelectorAll('input').forEach(item => item.value = '');
         });
         //отправка данных на сервер
-        const postData = (body, outputSuccess, outputError) => {
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
-                if(request.readyState !== 4) return;
-                if(request.status === 200) outputSuccess();
-                else outputError(request.status);
+        const postData = (body) => {
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', () => {
+                    if(request.readyState !== 4) return;
+                    if(request.status === 200) resolve();
+                    else reject(request.status);
+                });
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.send(JSON.stringify(body));
             });
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
+            
         } 
     }
     sendForm();
 
 });
+
