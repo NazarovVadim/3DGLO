@@ -325,9 +325,10 @@ window.addEventListener('DOMContentLoaded',function() {
             postData(body)
                 .then((response) => {
                     if(response.status !== 200) throw new Error('status network not 200')
-                    statusMessage.innerHTML = successMessage
+                    statusMessage.innerHTML = successMessage;
+                    setTimeout(() => statusMessage.innerHTML = '', 3000);
                 })
-                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
+                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage; setTimeout(() => statusMessage.innerHTML = '', 3000);});
                 
             form1.querySelectorAll('input').forEach(item => item.value = '');
         });
@@ -341,9 +342,10 @@ window.addEventListener('DOMContentLoaded',function() {
             postData(body)
                 .then((response) => {
                     if(response.status !== 200) throw new Error('status network not 200')
-                    statusMessage.innerHTML = successMessage
+                    statusMessage.innerHTML = successMessage;
+                    setTimeout(() => statusMessage.innerHTML = '', 3000);
                 })
-                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
+                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage; setTimeout(() => statusMessage.innerHTML = '', 3000);});
 
             form2.querySelectorAll('input').forEach(item => item.value = '');
         });
@@ -359,9 +361,10 @@ window.addEventListener('DOMContentLoaded',function() {
             postData(body)
                 .then((response) => {
                     if(response.status !== 200) throw new Error('status network not 200')
-                    statusMessage.innerHTML = successMessage
+                    statusMessage.innerHTML = successMessage;
+                    setTimeout(() => statusMessage.innerHTML = '', 3000);
                 })
-                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
+                .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage; setTimeout(() => statusMessage.innerHTML = '', 3000);});
 
             form3.querySelectorAll('input').forEach(item => item.value = '');
         });
