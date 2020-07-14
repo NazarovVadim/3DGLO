@@ -303,6 +303,10 @@ window.addEventListener('DOMContentLoaded',function() {
         const validePhone = (form) => {
             if(form.querySelector('.form-phone')){ 
                 form.querySelector('.form-phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/(?<!^)\+|[^\d+]/g, ''));
+                form.querySelector('.form-phone').addEventListener('input', (e) => {
+                    if(e.target.value.length < 5 || e.target.value.length > 20) form.querySelector('button').setAttribute("disabled", "disabled");
+                    else form.querySelector('button').removeAttribute("disabled");
+                });
             }
             if(form.querySelector('.form-name')){
                 form.querySelector('.form-name').addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^а-яА-Я ]/g, ''));
