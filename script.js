@@ -323,7 +323,10 @@ window.addEventListener('DOMContentLoaded',function() {
             let body= {};
             formData.forEach((value,key) => body[key] = value);
             postData(body)
-                .then(() => statusMessage.innerHTML = successMessage)
+                .then((response) => {
+                    if(response.status !== 200) throw new Error('status network not 200')
+                    statusMessage.innerHTML = successMessage
+                })
                 .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
                 
             form1.querySelectorAll('input').forEach(item => item.value = '');
@@ -336,7 +339,10 @@ window.addEventListener('DOMContentLoaded',function() {
             let body= {};
             formData.forEach((value,key) => body[key] = value);
             postData(body)
-                .then(() => statusMessage.innerHTML = successMessage)
+                .then((response) => {
+                    if(response.status !== 200) throw new Error('status network not 200')
+                    statusMessage.innerHTML = successMessage
+                })
                 .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
 
             form2.querySelectorAll('input').forEach(item => item.value = '');
@@ -351,25 +357,23 @@ window.addEventListener('DOMContentLoaded',function() {
             let body= {};
             formData.forEach((value,key) => body[key] = value);
             postData(body)
-                .then(() => statusMessage.innerHTML = successMessage)
+                .then((response) => {
+                    if(response.status !== 200) throw new Error('status network not 200')
+                    statusMessage.innerHTML = successMessage
+                })
                 .catch(error => {console.error(error); statusMessage.innerHTML = errorMessage;});
 
             form3.querySelectorAll('input').forEach(item => item.value = '');
         });
         //отправка данных на сервер
         const postData = (body) => {
-            return new Promise((resolve, reject) => {
-                const request = new XMLHttpRequest();
-                request.addEventListener('readystatechange', () => {
-                    if(request.readyState !== 4) return;
-                    if(request.status === 200) resolve();
-                    else reject(request.status);
-                });
-                request.open('POST', './server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-                request.send(JSON.stringify(body));
+            return fetch('./server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
             });
-            
         } 
     }
     sendForm();
