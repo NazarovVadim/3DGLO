@@ -5,7 +5,8 @@ import 'nodelist-foreach-polyfill';
 import elementClosest from 'element-closest';
 elementClosest(window);
 import 'formdata-polyfill';
-let Promise = require('es6-promise').Promise;
+import 'es6-promise';
+//let Promise = require('es6-promise').Promise;
 import 'fetch-polyfill';
 
 
